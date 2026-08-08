@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lifora | AI Emergency Healthcare Coordination Platform</title>
+    
+    <!-- External stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Icons and Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <div class="container header-inner">
+            <div class="header-left">
+                <div class="logo-icon">
+                    <i class="fa-solid fa-heart-pulse"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>Lifora</h1>
+                    <p>AI Emergency Healthcare Coordination</p>
+                </div>
+            </div>
+            
+            <!-- Developers Credits Pill -->
+            <div class="authors-pill" title="Pravneer Kaur, Patel Priti, Choudhary Babita, Rathwa Urvashi, Patel Aesha & Parvathy J.S.">
+                Developed by: <strong>Pravneer K., Patel P., Choudhary B. & Team</strong>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        
+        <!-- Live Emergency Alert Banner (Shown when SOS is active) -->
+        <div id="active-emergency-banner" style="display: none; margin-top: 24px; padding: 16px; background: rgba(255, 69, 58, 0.1); border: 1px solid rgba(255, 69, 58, 0.2); border-left: 5px solid var(--red-accent); border-radius: 12px; transition: all 0.3s ease;">
+            <!-- Rendered by JS -->
+        </div>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-left">
+                <h2>One Emergency.<br><span class="highlight">One AI Case.</span><br>Everyone Connected.</h2>
+                <p class="desc">Lifora is an AI-powered emergency healthcare ecosystem connecting patients, ambulances, hospitals, blood banks, and donors in real time to reduce critical response delays.</p>
+                <div class="btns">
+                    <button class="btn btn-lg btn-danger btn-sos-trigger" id="main-sos-btn" data-category="general">
+                        <i class="fa-solid fa-circle-exclamation"></i> Emergency SOS
+                    </button>
+                    <button class="btn btn-lg btn-primary" onclick="openModal('ai-modal')">
+                        <i class="fa-solid fa-robot"></i> AI Assistant
+                    </button>
+                    <button class="btn btn-lg btn-success" onclick="openBloodSearch()">
+                        <i class="fa-solid fa-droplet"></i> Need Blood
+                    </button>
+                </div>
+            </div>
+            
+            <div class="hero-right">
+                <div class="card-glass">
+                    <h3><i class="fa-solid fa-shield-halved" style="color: var(--blue-accent);"></i> AI Emergency System</h3>
+                    <div class="feature-list">
+                        <div class="feature-item warning">
+                            <div class="feature-icon"><i class="fa-solid fa-car-burst"></i></div>
+                            <div class="feature-text">
+                                <h4>Road Accident Detection</h4>
+                                <p>Instant emergency activation with location telemetry and severity analysis.</p>
+                            </div>
+                        </div>
+                        <div class="feature-item primary">
+                            <div class="feature-icon"><i class="fa-solid fa-clipboard-question"></i></div>
+                            <div class="feature-text">
+                                <h4>AI Triage Assistant</h4>
+                                <p>Voice & text based diagnostic questionnaire determines priority levels instantly.</p>
+                            </div>
+                        </div>
+                        <div class="feature-item success">
+                            <div class="feature-icon"><i class="fa-solid fa-hospital-user"></i></div>
+                            <div class="feature-text">
+                                <h4>Smart Hospital Selection</h4>
+                                <p>AI allocates optimal facility matching specialist, ICU beds, and traffic ETA.</p>
+                            </div>
+                        </div>
+                        <div class="feature-item danger">
+                            <div class="feature-icon"><i class="fa-solid fa-droplet"></i></div>
+                            <div class="feature-text">
+                                <h4>AI Blood Intelligence</h4>
+                                <p>Analyzes supply chains, matches blood banks, and coordinates nearby donors.</p>
+                            </div>
+                        </div>
+                        <div class="feature-item warning">
+                            <div class="feature-icon"><i class="fa-solid fa-network-wired"></i></div>
+                            <div class="feature-text">
+                                <h4>Digital Emergency Twin</h4>
+                                <p>Creates a live, decentralized medical feed shared with all authorized responders.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Emergency Activation Section -->
+        <section class="section">
+            <div class="section-title">
+                <h2>Emergency Activation</h2>
+                <p>Select the emergency type to trigger AI priority calculation and rescue dispatch</p>
+            </div>
+            <div class="emergency-grid">
+                <div class="emergency-card-interactive danger btn-sos-trigger" data-category="general" data-skip-selection="true">
+                    <div class="card-badge"><i class="fa-solid fa-truck-medical"></i></div>
+                    <h3>Medical Emergency</h3>
+                    <p>Chest pain, breathing problems, unconsciousness. AI starts triage assessment instantly.</p>
+                </div>
+                <div class="emergency-card-interactive primary btn-sos-trigger" data-category="accident" data-skip-selection="true">
+                    <div class="card-badge"><i class="fa-solid fa-car-burst"></i></div>
+                    <h3>Road Accident</h3>
+                    <p>Trauma, collisions, injuries. Instantly computes coordinates and sends rescue crews.</p>
+                </div>
+                <div class="emergency-card-interactive success btn-sos-trigger" data-category="blood" data-skip-selection="true">
+                    <div class="card-badge"><i class="fa-solid fa-droplet"></i></div>
+                    <h3>Need Blood</h3>
+                    <p>Hemorrhage, surgeries, crisis. AI finds local stock and alerts matching blood groups.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI Healthcare Intelligence Section -->
+        <section class="section">
+            <div class="section-title">
+                <h2>AI Healthcare Intelligence</h2>
+                <p>Smart tools designed to optimize patient treatment and response accuracy</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-box">
+                    <span class="feature-box-icon" style="color: var(--blue-accent);"><i class="fa-solid fa-brain"></i></span>
+                    <h3>AI Triage</h3>
+                    <p>Instantly classifies cases: Red (Critical), Orange (Emergent), Yellow (Urgent), or Green (Non-urgent) for efficient care scheduling.</p>
+                </div>
+                <div class="feature-box">
+                    <span class="feature-box-icon" style="color: var(--orange-accent);"><i class="fa-solid fa-route"></i></span>
+                    <h3>Hospital Routing</h3>
+                    <p>Reroutes ambulances dynamically based on live traffic, ER crowd occupancy, and ICU specialist staff availability.</p>
+                </div>
+                <div class="feature-box" onclick="showFirstAidGuide('cpr')" style="cursor: pointer;">
+                    <span class="feature-box-icon" style="color: var(--red-accent);"><i class="fa-solid fa-kit-medical"></i></span>
+                    <h3>AI First Aid <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:10px; opacity:0.6;"></i></h3>
+                    <p>Step-by-step interactive rhythm guides for CPR, choking, bleeding, burns, and strokes while awaiting crews.</p>
+                </div>
+                <div class="feature-box">
+                    <span class="feature-box-icon" style="color: var(--green-accent);"><i class="fa-solid fa-file-invoice-dollar"></i></span>
+                    <h3>AI Medical Summary</h3>
+                    <p>Generates a structured 30-second summary containing patient vitals, medications, and triage logs for doctors.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Connected Healthcare Network Simulator Section -->
+        <section class="section">
+            <div class="section-title">
+                <h2>Connected Healthcare Network</h2>
+                <p>Toggle dashboard tabs below to view simulated responder workflows in real time</p>
+            </div>
+            
+            <div class="tabs-container">
+                <button class="tab-btn active" data-tab="public" onclick="switchTab('public')">
+                    <i class="fa-solid fa-user"></i> Public / Patient
+                </button>
+                <button class="tab-btn" data-tab="ambulance" onclick="switchTab('ambulance')">
+                    <i class="fa-solid fa-truck-medical"></i> Ambulance Crew
+                </button>
+                <button class="tab-btn" data-tab="hospital" onclick="switchTab('hospital')">
+                    <i class="fa-solid fa-hospital"></i> Hospital ER
+                </button>
+                <button class="tab-btn" data-tab="bloodbank" onclick="switchTab('bloodbank')">
+                    <i class="fa-solid fa-house-medical"></i> Blood Bank
+                </button>
+                <button class="tab-btn" data-tab="donor" onclick="switchTab('donor')">
+                    <i class="fa-solid fa-heart"></i> Blood Donor
+                </button>
+            </div>
+
+            <!-- Simulated Dashboards Viewport -->
+            <div class="dashboard-view">
+                
+                <!-- 1. PUBLIC/USER DASHBOARD -->
+                <div class="dashboard-panel active" id="panel-public">
+                    <div class="dashboard-header">
+                        <h3><i class="fa-solid fa-circle-user"></i> Patient Personal Portal</h3>
+                        <span class="status-indicator">Secure Connection</span>
+                    </div>
+                    <div class="dashboard-body">
+                        <div class="dashboard-grid">
+                            <div class="dashboard-card">
+                                <h4>My Active SOS Status</h4>
+                                <div id="pub-empty-sos-view" class="empty-state">
+                                    <span class="empty-state-icon"><i class="fa-solid fa-check-double"></i></span>
+                                    <p>No active emergencies. Keep your profile updated for offline access.</p>
+                                </div>
+                                <div id="pub-active-sos-view" style="display: none; padding: 12px 0;">
+                                    <div class="data-list">
+                                        <div class="data-row" style="margin-bottom:12px; border-left-color: var(--red-accent);">
+                                            <div class="data-row-info">
+                                                <h5>Severity Level: <span id="pub-sos-level">RED</span></h5>
+                                                <p>Allocated Hospital: <span id="pub-sos-hospital">City Trauma</span></p>
+                                            </div>
+                                        </div>
+                                        <div class="data-row" style="border-left-color: var(--blue-accent);">
+                                            <div class="data-row-info">
+                                                <h5>Ambulance Code: <span id="pub-sos-ambulance">AMB-9022</span></h5>
+                                                <p>Live ETA: <strong id="pub-sos-eta">6 mins</strong></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-secondary" onclick="cancelActiveSOS()" style="width: 100%; margin-top: 16px; font-size:12px;">Cancel Rescue Dispatch</button>
+                                </div>
+                            </div>
+                            <div class="dashboard-card">
+                                <h4>Personal EHR Summary</h4>
+                                <div style="display: flex; flex-direction:column; gap:8px; font-size:13px; padding-top:8px;">
+                                    <div><strong>Primary Hospital:</strong> City Central Clinic</div>
+                                    <div><strong>Insurance Provider:</strong> Lifeshield Premium (#902-88)</div>
+                                    <div><strong>Secondary Contacts:</strong> ICE Primary Contact Linked</div>
+                                    <a href="#vault-section" class="btn btn-secondary" style="font-size:12px; padding: 8px 12px; margin-top:12px; display:inline-block; text-align:center;">Edit My Medical Vault</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. AMBULANCE DASHBOARD -->
+                <div class="dashboard-panel" id="panel-ambulance">
+                    <div class="dashboard-header">
+                        <h3><i class="fa-solid fa-truck-moving"></i> Ambulance Transit Feed</h3>
+                        <span class="status-indicator">Unit #AMB-1204 Online</span>
+                    </div>
+                    <div class="dashboard-body">
+                        <div id="amb-empty-view" class="empty-state">
+                            <span class="empty-state-icon"><i class="fa-solid fa-circle-dot"></i></span>
+                            <p>Standing by. Ready to receive dispatch directions from AI Triage.</p>
+                        </div>
+                        <div id="amb-active-view" style="display: none;">
+                            <div class="dashboard-grid">
+                                <div class="dashboard-card">
+                                    <h4>Active Patient Case</h4>
+                                    <div style="font-size:13px; display:flex; flex-direction:column; gap:10px;">
+                                        <div><strong>Patient:</strong> <span id="amb-pat-name">John Doe</span></div>
+                                        <div><strong>Location:</strong> <span id="amb-pat-loc">Route 10, Crossing</span></div>
+                                        <div><strong>Assigned Triage:</strong> <span id="amb-pat-triage" class="data-row-badge critical" style="padding: 2px 8px; border-radius:4px;">RED</span></div>
+                                        <div><strong>Target Destination:</strong> <span id="amb-pat-dest">City General Hospital</span></div>
+                                    </div>
+                                </div>
+                                <div class="dashboard-card">
+                                    <h4>AI Shared Medical EHR</h4>
+                                    <div style="font-size:13px; display:flex; flex-direction:column; gap:10px;">
+                                        <div><strong>Pre-existing Conditions:</strong> <span id="amb-pat-history">Asthma</span></div>
+                                        <div><strong>Drug/Food Allergies:</strong> <span id="amb-pat-allergies">Penicillin</span></div>
+                                        <div style="margin-top:8px; padding:8px; background:rgba(255,255,255,0.03); border-radius:6px; border-left:2px solid var(--blue-accent);">
+                                            <strong>AI Handover Note:</strong> Prepare oxygen cannula support during transit.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. HOSPITAL ER DASHBOARD -->
+                <div class="dashboard-panel" id="panel-hospital">
+                    <div class="dashboard-header">
+                        <h3><i class="fa-solid fa-hospital"></i> Emergency Room Admission Queue</h3>
+                        <span class="status-indicator">Trauma Dept Active</span>
+                    </div>
+                    <div class="dashboard-body">
+                        <div id="hosp-empty-view" class="empty-state">
+                            <span class="empty-state-icon"><i class="fa-solid fa-bed"></i></span>
+                            <p>No incoming trauma transfers. 4 ICU Beds & 3 Trauma slots available.</p>
+                        </div>
+                        <div id="hosp-active-view" style="display: none;">
+                            <div class="dashboard-grid">
+                                <div class="dashboard-card">
+                                    <h4>Incoming Rescues</h4>
+                                    <div class="data-list">
+                                        <div class="data-row high-priority">
+                                            <div class="data-row-info">
+                                                <h5><span id="hosp-incoming-name">John Doe</span> (ETA: <span id="hosp-incoming-eta">8 min</span>)</h5>
+                                                <p>Condition triage is <span id="hosp-incoming-triage" class="data-row-badge critical" style="padding:2px 6px; border-radius:4px;">RED</span></p>
+                                            </div>
+                                            <span class="status-indicator red">Preparing ICU</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="dashboard-card">
+                                    <h4>30-Sec Medical Summary</h4>
+                                    <p style="font-size: 13px; line-height: 1.5; color: var(--text-secondary);" id="hosp-incoming-summary">
+                                        Patient summary will load here...
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. BLOOD BANK DASHBOARD -->
+                <div class="dashboard-panel" id="panel-bloodbank">
+                    <div class="dashboard-header">
+                        <h3><i class="fa-solid fa-house-medical-circle-exclamation"></i> Blood Reserve Registry</h3>
+                        <span class="status-indicator">Storage Temp OK (-30°C)</span>
+                    </div>
+                    <div class="dashboard-body">
+                        <div class="dashboard-grid">
+                            <div class="dashboard-card">
+                                <h4>Hospital Requests Inbox</h4>
+                                <div id="blood-req-list">
+                                    <!-- Rendered dynamically by JS -->
+                                </div>
+                            </div>
+                            <div class="dashboard-card">
+                                <h4>Simulated Blood Inventory Stock</h4>
+                                <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+                                    <thead>
+                                        <tr style="border-bottom: 2px solid var(--border-color); text-align: left;">
+                                            <th style="padding: 8px;">Type</th>
+                                            <th style="padding: 8px;">Stock</th>
+                                            <th style="padding: 8px; text-align:right;">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="blood-inventory-body">
+                                        <!-- Rendered dynamically by JS -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. DONOR DASHBOARD -->
+                <div class="dashboard-panel" id="panel-donor">
+                    <div class="dashboard-header">
+                        <h3><i class="fa-solid fa-heart-pulse"></i> Registered Donors Hub</h3>
+                        <span class="status-indicator">142 Local Donors Online</span>
+                    </div>
+                    <div class="dashboard-body">
+                        <div class="dashboard-grid">
+                            <div class="dashboard-card">
+                                <h4>Urgent Blood Matches Nearby</h4>
+                                <div id="donor-requests">
+                                    <!-- Rendered dynamically by JS -->
+                                </div>
+                            </div>
+                            <div class="dashboard-card">
+                                <h4>My Donor Status Card</h4>
+                                <div style="font-size:13px; display:flex; flex-direction:column; gap:8px;">
+                                    <div><strong>Donor ID:</strong> LF-49221-D</div>
+                                    <div><strong>Eligible for Donation:</strong> <span style="color: var(--green-accent); font-weight:600;"><i class="fa-solid fa-circle-check"></i> Yes (Last: 4 months ago)</span></div>
+                                    <div><strong>Registered Matches:</strong> O+, O-</div>
+                                    <button class="btn btn-secondary" onclick="alert('Digital Donor Pass downloaded. Present at check-in counter.')" style="margin-top: 10px; font-size:11px; padding: 8px 12px; width:100%;">Download Digital Donor Card</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Smart Medical Vault Section -->
+        <section class="section" id="vault-section">
+            <div class="section-title">
+                <h2>Smart Medical Vault</h2>
+                <p>Securely store emergency profile telemetry on your local browser. First responders scan the lock screen QR to access records without bypass passwords.</p>
+            </div>
+            
+            <div class="card-glass">
+                <div class="vault-split">
+                    <div class="vault-form">
+                        <h3 style="font-size: 20px;"><i class="fa-solid fa-folder-open" style="color: var(--blue-accent);"></i> Emergency Profile Editor</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="vault-name">Full Name</label>
+                                <input type="text" id="vault-name" placeholder="John Doe">
+                            </div>
+                            <div class="form-group">
+                                <label for="vault-dob">Date of Birth</label>
+                                <input type="date" id="vault-dob">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="vault-blood">Blood Group</label>
+                                <select id="vault-blood">
+                                    <option value="A+">A+</option>
+                                    <option value="A-">A-</option>
+                                    <option value="B+">B+</option>
+                                    <option value="B-">B-</option>
+                                    <option value="AB+">AB+</option>
+                                    <option value="AB-">AB-</option>
+                                    <option value="O+" selected>O+</option>
+                                    <option value="O-">O-</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="vault-ice">ICE Contact Number</label>
+                                <input type="text" id="vault-ice" placeholder="Jane Doe (+91 98765 43210)">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="vault-has-allergies">Has Known Drug Allergies?</label>
+                                <select id="vault-has-allergies">
+                                    <option value="no" selected>No — No known drug allergies</option>
+                                    <option value="yes">Yes — List them below</option>
+                                </select>
+                            </div>
+                            <div class="form-group" id="vault-allergies-group">
+                                <label for="vault-allergies">Drug / Medical Allergies</label>
+                                <input type="text" id="vault-allergies" placeholder="e.g. Penicillin, aspirin, nuts">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="vault-meds">Active Medications</label>
+                                <textarea id="vault-meds" rows="2" placeholder="e.g. Albuterol, Metformin"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="vault-conditions">Pre-existing Conditions</label>
+                                <textarea id="vault-conditions" rows="2" placeholder="e.g. Asthma, Hypertension"></textarea>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" onclick="saveEHR()" style="width: 100%;">
+                            <i class="fa-solid fa-floppy-disk"></i> Securely Save to Vault
+                        </button>
+                    </div>
+                    
+                    <div class="vault-qr-view">
+                        <div class="qr-card-container">
+                            <div class="qr-frame">
+                                <img id="vault-qr-image" src="" alt="Emergency QR">
+                            </div>
+                            <div class="qr-details">
+                                <h4 id="vault-qr-name">Deepak Jha</h4>
+                                <div class="qr-badges" id="vault-qr-badges" style="display:flex; gap:6px; flex-wrap:wrap; justify-content:center; margin: 8px 0;">
+                                    <span id="qr-badge-blood" style="background:rgba(255,69,58,0.15); color:#ff453a; padding:3px 10px; border-radius:20px; font-size:11px; font-weight:700;">🩸 O+</span>
+                                    <span id="qr-badge-allergy" style="background:rgba(48,209,88,0.12); color:#30d158; padding:3px 10px; border-radius:20px; font-size:11px; font-weight:700;">✅ No Allergies</span>
+                                </div>
+                                <p id="vault-qr-meta" style="font-size:11px;">DOB: 31/10/2000 | ICE: +977 9708027325</p>
+                                <p id="vault-qr-conditions" style="font-size:11px; color: var(--text-muted); margin-top:4px;">Conditions: None</p>
+                                <div style="margin-top: 12px; padding: 8px; background: rgba(10, 132, 255, 0.05); border-radius: 6px; font-size:11px; color: var(--text-secondary);">
+                                    <i class="fa-solid fa-circle-info"></i> Scan opens full emergency document. Paramedics can read without device unlock.
+                                </div>
+                                <button class="btn btn-secondary" onclick="openPatientCard()" style="margin-top: 12px; font-size:11px; padding: 6px 12px; width:100%;">
+                                    <i class="fa-solid fa-id-card-clip"></i> Preview Emergency Card
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Smart Medical Vault Additional Info Cards -->
+        <section style="padding-bottom: 60px;">
+            <div class="features-grid">
+                <div class="feature-box">
+                    <span class="feature-box-icon" style="color: var(--blue-accent);"><i class="fa-solid fa-lock"></i></span>
+                    <h3>Secure Health Records</h3>
+                    <p>Data stored directly on-device using local cryptographic sandboxing. Absolutely no patient records leak to public servers.</p>
+                </div>
+                <div class="feature-box">
+                    <span class="feature-box-icon" style="color: var(--red-accent);"><i class="fa-solid fa-qrcode"></i></span>
+                    <h3>Emergency QR Card</h3>
+                    <p>Paramedics scan the locked-device QR to retrieve life-saving vitals, blood type, and emergency contacts instantly.</p>
+                </div>
+                <div class="feature-box">
+                    <span class="feature-box-icon" style="color: var(--orange-accent);"><i class="fa-solid fa-wifi"></i></span>
+                    <h3>Offline Emergency Mode</h3>
+                    <p>Uses emergency SMS protocols to broadcast blood group and GPS markers to local dispatchers without cellular internet data.</p>
+                </div>
+                <div class="feature-box">
+                    <span class="feature-box-icon" style="color: var(--green-accent);"><i class="fa-solid fa-microphone"></i></span>
+                    <h3>Voice Assistance</h3>
+                    <p>Interactive medical prompts available in regional dialects including Gujarati, Hindi, and English for immediate instructions.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Future Innovations Section -->
+        <section class="section">
+            <div class="section-title">
+                <h2>Future Innovation</h2>
+                <p>Next-generation healthcare technologies currently in development pipelines</p>
+            </div>
+            
+            <div class="card-glass">
+                <div class="feature-list">
+                    <div class="feature-item primary">
+                        <div class="feature-icon"><i class="fa-solid fa-dna"></i></div>
+                        <div class="feature-text">
+                            <h4>Digital Emergency Twin</h4>
+                            <p>A decentralized, continuously updated virtual patient twin coordinating records across ambulance transit lanes and ER surgical modules.</p>
+                        </div>
+                    </div>
+                    <div class="feature-item danger">
+                        <div class="feature-icon"><i class="fa-solid fa-mobile-screen-button"></i></div>
+                        <div class="feature-text">
+                            <h4>SOS Shake Detection</h4>
+                            <p>Shake your phone three times under panic states to trigger automatic cellular voice prompts and SMS coordinates when display is cracked.</p>
+                        </div>
+                    </div>
+                    <div class="feature-item success">
+                        <div class="feature-icon"><i class="fa-solid fa-users"></i></div>
+                        <div class="feature-text">
+                            <h4>Smart Crowd Help</h4>
+                            <p>Alerts nearby validated medical students, CPR-trained citizens, and off-duty doctors to cover critical cardiac compressions before transit arrival.</p>
+                        </div>
+                    </div>
+                    <div class="feature-item warning">
+                        <div class="feature-icon"><i class="fa-solid fa-shield-cat"></i></div>
+                        <div class="feature-text">
+                            <h4>Accidental SOS Protection</h4>
+                            <p>Machine learning pattern recognition screens out pocket shakes and alerts, prompting verification to prevent false-alarm dispatch overhead.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Lifora Impact Section -->
+        <section class="section">
+            <div class="section-title">
+                <h2>Lifora Impact</h2>
+                <p>Connecting ecosystems to build a zero-delay emergency response environment</p>
+            </div>
+            <div class="stats-container">
+                <div class="stat-box">
+                    <h3>24/7</h3>
+                    <p>Emergency AI Triage Monitoring</p>
+                </div>
+                <div class="stat-box">
+                    <h3>5</h3>
+                    <p>Connected Caregiver Networks</p>
+                </div>
+                <div class="stat-box">
+                    <h3>AI</h3>
+                    <p>Intelligent Dispatch Optimization</p>
+                </div>
+                <div class="stat-box">
+                    <h3>&infin;</h3>
+                    <p>Lives Connected Worldwide</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Lifora Vision Card -->
+        <section class="section">
+            <div class="card-glass" style="text-align: center; padding: 48px;">
+                <h3 style="justify-content: center; font-size: 28px; margin-bottom:16px;">
+                    <i class="fa-solid fa-quote-left" style="font-size:20px; vertical-align:super; opacity:0.4; margin-right:12px;"></i>
+                    Lifora Vision
+                    <i class="fa-solid fa-quote-right" style="font-size:20px; vertical-align:super; opacity:0.4; margin-left:12px;"></i>
+                </h3>
+                <p style="font-size: 18px; color: var(--text-secondary); max-width: 800px; margin: 0 auto; line-height: 1.8;">
+                    One emergency. One AI case. Everyone who needs to act connected in real time. 
+                    From patient to ambulance, hospital, blood bank, and family — Lifora creates a single source of truth to save critical minutes and save lives.
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Lifora AI Emergency Healthcare Platform. All rights reserved.</p>
+            <p style="margin-top: 8px; font-size: 11px; color: var(--text-muted);">Saving Lives Through Intelligent Coordination</p>
+        </div>
+    </footer>
+
+    <!-- ==================== MODALS & DIALOGS ==================== -->
+
+    <!-- 1. EMERGENCY SOS TRIAGE DIALOG -->
+    <div class="modal-backdrop" id="sos-modal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3 id="triage-category-title">Emergency Triage Wizard</h3>
+                <button class="modal-close-btn" onclick="closeModal('sos-modal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- Wizard Steps Tracker -->
+                <div class="wizard-steps">
+                    <div class="wizard-step active" id="step-pill-1">1</div>
+                    <div class="wizard-step" id="step-pill-2">2</div>
+                    <div class="wizard-step" id="step-pill-3">3</div>
+                </div>
+
+                <!-- STEP 1: SELECT CATEGORY -->
+                <div class="wizard-content-step active" id="wizard-step-view-1">
+                    <h4 style="margin-bottom:16px; font-size: 15px;">Confirm Emergency Triage Type:</h4>
+                    <div style="display:flex; flex-direction:column; gap:12px;">
+                        <div class="feature-item danger triage-select-card" style="cursor:pointer;" onclick="selectTriageCategory('general')" data-category="general">
+                            <div class="feature-icon"><i class="fa-solid fa-kit-medical"></i></div>
+                            <div class="feature-text">
+                                <h4>General Medical Emergency</h4>
+                                <p>Unconsciousness, extreme respiratory difficulty, strokes, etc.</p>
+                            </div>
+                        </div>
+                        <div class="feature-item primary triage-select-card" style="cursor:pointer;" onclick="selectTriageCategory('accident')" data-category="accident">
+                            <div class="feature-icon"><i class="fa-solid fa-car-burst"></i></div>
+                            <div class="feature-text">
+                                <h4>Road Trauma / Collision</h4>
+                                <p>Heavy bleeding, fractures, vehicle trap, severe burns.</p>
+                            </div>
+                        </div>
+                        <div class="feature-item success triage-select-card" style="cursor:pointer;" onclick="selectTriageCategory('blood')" data-category="blood">
+                            <div class="feature-icon"><i class="fa-solid fa-droplet"></i></div>
+                            <div class="feature-text">
+                                <h4>Urgent Transfusion Request</h4>
+                                <p>Hemorrhaging shock states requiring immediate donor/bank matching.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 2: ANSWER TRIAGE QUESTIONS -->
+                <div class="wizard-content-step" id="wizard-step-view-2">
+                    <h4 style="margin-bottom:16px; font-size: 15px;">Answer Triage Health Prompts:</h4>
+                    <div id="triage-questions-container">
+                        <!-- Rendered dynamically by JS -->
+                    </div>
+                </div>
+
+                <!-- STEP 3: DISPATCH SIMULATOR -->
+                <div class="wizard-content-step" id="wizard-step-view-3">
+                    <div class="dispatch-simulation">
+                        <div class="dispatch-status">DISPATCH SIMULATION ACTIVE</div>
+                        <div id="dispatch-status-text">Coordinating matching responder units...</div>
+                        
+                        <div class="dispatch-progress">
+                            <div class="dispatch-progress-bar" id="dispatch-bar"></div>
+                        </div>
+
+                        <!-- Result details -->
+                        <div style="text-align: left; background: rgba(255,255,255,0.02); padding:16px; border:1px solid var(--border-color); border-radius:12px; margin-top:20px; font-size:13px;">
+                            <div style="margin-bottom: 8px;"><strong>Triage Category:</strong> <span id="result-triage-badge" class="data-row-badge critical">RED</span> <span id="result-triage-desc" style="color:var(--text-secondary); margin-left:6px;"></span></div>
+                            <div style="margin-bottom: 8px;"><strong>Allocated Hospital:</strong> <span id="result-hospital">--</span></div>
+                            <div style="margin-bottom: 8px;"><strong>Ambulance Unit ID:</strong> <span id="result-ambulance">--</span></div>
+                            <div><strong>Estimated Arrival ETA:</strong> <span id="result-eta" style="color: var(--blue-accent); font-weight:700;">--</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="wizard-prev-btn" onclick="handleWizardPrev()">Back</button>
+                <button class="btn btn-primary" id="wizard-next-btn" onclick="handleWizardNext()">Next ➔</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. AI ASSISTANT CHATBOT DIALOG -->
+    <div class="modal-backdrop" id="ai-modal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-robot" style="color:var(--blue-accent);"></i> AI Medical Assistant</h3>
+                <button class="modal-close-btn" onclick="closeModal('ai-modal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="chat-container">
+                    <div class="chat-messages" id="chat-messages-list">
+                        <!-- Loaded dynamically by JS -->
+                    </div>
+                    <div class="chat-input-bar">
+                        <input type="text" id="chat-input-field" placeholder="Ask about symptoms, CPR, choking, bleeding..." onkeypress="handleChatKeyPress(event)">
+                        <button class="chat-send-btn" onclick="sendChatMessage()">Send <i class="fa-solid fa-paper-plane"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('ai-modal')">Close Chat</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. NEED BLOOD SEARCH DIALOG -->
+    <div class="modal-backdrop" id="blood-modal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-droplet" style="color:var(--red-accent);"></i> Blood Search Registry</h3>
+                <button class="modal-close-btn" onclick="closeModal('blood-modal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="blood-search-group">Required Blood Group</label>
+                    <select id="blood-search-group">
+                        <option value="A+">A+</option>
+                        <option value="A-">A-</option>
+                        <option value="B+">B+</option>
+                        <option value="B-">B-</option>
+                        <option value="AB+">AB+</option>
+                        <option value="AB-">AB-</option>
+                        <option value="O+">O+</option>
+                        <option value="O-">O-</option>
+                    </select>
+                </div>
+                <button class="btn btn-primary" onclick="runBloodSearch()" style="width: 100%; margin-bottom: 20px;">
+                    <i class="fa-solid fa-magnifying-glass"></i> Search Stock availability
+                </button>
+
+                <h4 style="font-size: 14px; color: var(--text-secondary); margin-bottom:12px;">Query Results:</h4>
+                <div id="blood-search-results">
+                    <!-- Rendered by JS -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('blood-modal')">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. FIRST AID INFORMATION DIALOG -->
+    <div class="modal-backdrop" id="firstaid-modal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3 id="firstaid-modal-title">First Aid Guidance</h3>
+                <button class="modal-close-btn" onclick="closeFirstAidModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="firstaid-modal-body">
+                <!-- Rendered dynamically by JS -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeFirstAidModal()">Close Guide</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- External script -->
+    <script src="app.js"></script>
+</body>
+</html>
