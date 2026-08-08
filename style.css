@@ -119,8 +119,12 @@ textarea::-webkit-scrollbar-thumb,
 
 
 body {
-    background-color: var(--bg-primary);
-    color: var(--text-primary);
+    background-color: red !important;
+}
+
+    h1{
+    color: white !important;
+    }
     font-family: var(--font-body);
     line-height: 1.6;
     overflow-x: hidden;
